@@ -3,10 +3,14 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
+import LoginPage from './components/LoginPage.jsx';
+import { AuthProvider } from './context/AuthContext.jsx';
 import Layout from './App.jsx'; // Our main layout from App.jsx
 import HomePage from './components/HomePage.jsx'; // Our new homepage
 import PropertyPage from './components/PropertyPage.jsx'; // Our property page
 import ListingsPage from './components/ListingsPage.jsx';
+import OwnerDashboard from './components/OwnerDashboard.jsx';
+import TenantProfilePage from './components/TenantProfilePage.jsx';
 
 // 1. Define our routes
 const router = createBrowserRouter([
@@ -25,7 +29,12 @@ const router = createBrowserRouter([
       { // <-- 3. Add this new route object
         path: 'listings',
         element: <ListingsPage />
-      }
+      },
+      { path: 'login', element: <LoginPage /> },
+      { path: 'dashboard', element: <OwnerDashboard /> },
+      { path: 'tenant/:id', element: <TenantProfilePage /> }
+      
+
     ]
   }
 ]);
@@ -33,6 +42,9 @@ const router = createBrowserRouter([
 // 2. Render the app using the RouterProvider
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvider>
+       <RouterProvider router={router} />  
+    </AuthProvider>
+    
   </React.StrictMode>
 );
